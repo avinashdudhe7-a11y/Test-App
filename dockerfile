@@ -1,12 +1,15 @@
-FROM node
+FROM node:latest
 
-ENV MONGO_DB_USERNAME=admin
-ENV MONGO_DB_PWD=qwerty
+WORKDIR /usr/src/app
 
-RUN mkdir -p /testapp
+# Install dependencies
+COPY package*.json ./
+RUN npm install
 
-COPY . /testapp
+# Copy app source
+COPY . .
 
+# Match this to your app's port
+EXPOSE 5050
 
-
-CMD ["node", "/testapp/server.js"]
+CMD ["node", "server.js"]
