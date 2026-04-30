@@ -3,7 +3,7 @@ const app = express();
 const MongoClient = require("mongodb").MongoClient;
 
 const PORT = 5050;
-const MONGO_URL = "mongodb://admin:password@mongodb:27017/mydb?authSource=admin";
+const MONGO_URL = process.env.MONGO_URL || "mongodb://admin:password@mongodb:27017/mydb?authSource=admin";
 const client = new MongoClient(MONGO_URL);
 
 app.use(express.urlencoded({ extended: true }));
@@ -31,6 +31,10 @@ app.get("/getUsers", async (req, res) => {
 app.post("/addUser", async (req, res) => {
     await db.collection('users').insertOne(req.body);
     res.status(201).send("User added");
+});
+
+app.get("/health", (req, res) => {
+    res.status(200).send("OK");
 });
 
 connectDB().then(() => {
