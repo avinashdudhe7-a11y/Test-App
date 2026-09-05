@@ -9,5 +9,8 @@ services:
   node_app:
     build:
       dockerfile: Dockerfile
+    environment:
+      MONGO_URL: mongodb://admin:qwerty@mongo:27017
+      SAMUDRA_NAME: samuda_name
     ports:
       - 8000:8000

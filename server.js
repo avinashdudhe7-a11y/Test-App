@@ -7,13 +7,15 @@ const PORT = 8000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-const MONGO_URL = "mongodb://admin:qwerty@localhost:27017";
+const MONGO_URL =
+    process.env.MONGO_URL
 const client = new MongoClient(MONGO_URL);
 
 //GET all users
 app.get("/getUsers", async (req, res) => {
     await client.connect(URL);
     console.log('Connected successfully to server');
+    console.log(process.env.SAMUDRA_NAME);
 
     const db = client.db("apnacollege-db");
     const data = await db.collection('users').find({}).toArray();
